@@ -29,8 +29,6 @@ class Movie(Base):
     released_at = Column(DateTime, nullable = True)
     imdb_url = Column(String(64))
 
-
-
 class Rating(Base):
     __tablename__ = "ratings"
 
