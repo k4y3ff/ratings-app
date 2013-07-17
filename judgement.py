@@ -8,22 +8,22 @@ Flask.secret_key = "khkeyjlhgchxf;oygfgfklugifxghjgcx"
 def index():
     return render_template("index.html")
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/login", methods = ['GET', 'POST'])
 def login():
     if request.method == "GET":
-        return render_template("login.html", error="")
+        return render_template("login.html", error = "")
 
     elif request.method == "POST":
-        email= request.form["email"]
-        password= request.form["password"]
+        email = request.form["email"]
+        password = request.form["password"]
 
         existing_user = model.session.query(model.User).filter_by(email = email, password = password).first()
 
         if existing_user:
             session['user_id'] = existing_user.id
-            return redirect("user_profile?id=" +str(existing_user.id))
+            return redirect("user_profile?id=" + str(existing_user.id))
         else:
-            return render_template("login.html", error="Incorrect username/password; Register if new user")
+            return render_template("login.html", error = "Incorrect username/password; Register if new user")
 
 @app.route("/logout")
 def logout():
@@ -55,7 +55,7 @@ def movie_list():
 
     return render_template("movie_list.html", movie_list= movie_list)
 
-@app.route("/new_user", methods =['GET', 'POST'])
+@app.route("/new_user", methods = ['GET', 'POST'])
 def register():
     if request.method == "GET":
         return render_template("new_user.html", error = "")
@@ -82,26 +82,30 @@ def register():
         else:
             return render_template("new_user.html", error = "Account with associated email already exists.")
 
-@app.route("/update_rating", methods=['GET','POST'])
+@app.route("/update_rating", methods = ['GET','POST'])
 def update_rating():
 
     if request.method == "POST":
         rating = request.form["rating"]
-        movie_id= request.form["movie_id"]
+        movie_id = request.form["movie_id"]
 
-    user_id = session['user_id']
+    if 'user_id' in session:
+        user_id = session['user_id']
 
-    current_rating = model.session.query(model.Rating).filter_by(movie_id= movie_id, user_id = user_id).first()
-    
-    if current_rating != None:
-        current_rating.rating = rating
-        model.session.update(current_rating.rating)
-        model.session.commit()
+        current_rating = model.session.query(model.Rating).filter_by(movie_id = movie_id, user_id = user_id).first()
+        
+        if current_rating != None:
+            current_rating.rating = rating
+            model.session.update(current_rating.rating)
+            model.session.commit()
+        else:
+            model.session.add(model.Rating(movie_id = movie_id, user_id = user_id, rating = rating))
+            model.session.commit()
+
+        return redirect("/movie?movie_id=" + str(movie_id))
+
     else:
-        model.session.add(model.Rating(movie_id = movie_id, user_id = user_id, rating = rating))
-        model.session.commit()
-
-    return redirect("/movie?movie_id="+str(movie_id))
+        return redirect("/movie?movie_id=" + str(movie_id))
 
 
 @app.route("/user_list")
