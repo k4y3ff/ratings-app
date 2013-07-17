@@ -26,7 +26,7 @@ class Movie(Base):
 
     id = Column(Integer, primary_key = True)
     name = Column(String(64))
-    released_at = Column(DateTime, nullable =True)
+    released_at = Column(DateTime, nullable = True)
     imdb_url = Column(String(64))
 
 class Rating(Base):
@@ -38,7 +38,7 @@ class Rating(Base):
     rating = Column(Integer)
 
     user = relationship("User", backref = backref("ratings", order_by = id))
-    movie = relationship("Movie", backref= backref("ratings", order_by = id))   
+    movie = relationship("Movie", backref = backref("ratings", order_by = id))   
 
 
 ### End class declarations

@@ -7,7 +7,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/new_user", methods=['GET', 'POST'])
+@app.route("/new_user", methods =['GET', 'POST'])
 def register():
     if request.method == "GET":
         return render_template("new_user.html", error = "")
@@ -29,7 +29,7 @@ def register():
 
             user = model.session.query(model.User).filter_by(email = email).first()
 
-            return redirect("user_profile?id="+str(user.id))
+            return redirect("user_profile?id=" + str(user.id))
 
 
 
@@ -46,14 +46,14 @@ def register():
 #     return render_template("user_list.html", users=user_list)
 
 
-@app.route("/user_profile", methods=['GET','POST'])
+@app.route("/user_profile", methods = ['GET','POST'])
 def login():
 
     user_id = request.args.get("id")
-    #print user_id
+
     user = model.session.query(model.User).get(user_id)
 
-    return render_template("user_profile.html", user=user)
+    return render_template("user_profile.html", user = user)
     
 if __name__ == "__main__":
     app.run(debug = True)

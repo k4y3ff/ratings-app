@@ -5,12 +5,8 @@ import unicodedata
 
 def load_users(session):
 
-    # use u.user
-
     f = open("seed_data/u.user")
     txt =f.readlines()
-
-    #print txt
 
     for line in txt:
         input_list = line.split("|")
@@ -25,7 +21,6 @@ def load_users(session):
 
 
 def load_movies(session):
-     # use u.item
 
     f = open("seed_data/u.item")
     txt = f.readlines()
@@ -36,8 +31,8 @@ def load_movies(session):
         if input_list[-1][-1] == "\n":
             input_list[-1] = input_list[-1][:-1]
 
-        title= input_list[1] 
-        title= title.decode('latin-1')
+        title = input_list[1] 
+        title = title.decode('latin-1')
         
         if input_list[2] != "":
             date_time = datetime.strptime(input_list[2], '%d-%b-%Y')
@@ -66,13 +61,11 @@ def load_ratings(session):
 
     session.commit()
 
-def main(session):
-    # You'll call each of the load_* functions with the session as an argument
+def main(session):    
     
     # load_users(session)
     # load_movies(session)
-
-    load_ratings(session)
+    # load_ratings(session)
 
     pass
 
