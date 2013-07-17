@@ -31,8 +31,6 @@ def register():
 
             return redirect("user_profile?id=" + str(user.id))
 
-
-
         else:
             return render_template("new_user.html", error = "Account with associated email already exists.")
 
@@ -40,10 +38,12 @@ def register():
 
 
 
-# @app.route("/user_list")
-# def user_list():
-#     user_list = model.session.query(model.User).limit(5).all()
-#     return render_template("user_list.html", users=user_list)
+@app.route("/user_list")
+def user_list():
+    
+    user_list = model.session.query(model.User).limit(5).all()
+    
+    return render_template("user_list.html", users = user_list)
 
 
 @app.route("/user_profile", methods = ['GET','POST'])

@@ -61,6 +61,7 @@ def load_ratings(session):
 
     session.commit()
 
+
 def main(session):    
     
     # load_users(session)

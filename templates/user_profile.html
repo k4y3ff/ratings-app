@@ -6,11 +6,24 @@
 </body>
 	<h1>User Profile</h1>
 	
+	<h2>User Info</h2>
 	<ul>
+		<li>ID: {{user.id}}</li>
 		<li>Email: {{user.email}}</li>
 		<li>Age: {{user.age}}</li>
 		<li>Zipcode: {{user.zipcode}}</li>
 	</ul>
+
+	<h2>Ratings</h2>
+
+	{% for rating in user.ratings %}
+		<h3>{{rating.movie.name}}</h3>
+		<ul>
+			<li>Rating: {{rating.rating}}</li>
+			<li>Release Date: {{rating.movie.released_at}} </li>
+			<li>IMDB URL: <a href="{{rating.movie.imdb_url}}">{{rating.movie.imdb_url}}</a></li>
+		</ul>
+	{% endfor %}
 
 </body>
 </html>
