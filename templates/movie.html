@@ -1,0 +1,21 @@
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>{{movie.name}}</h1>
+    <ul>
+        <li>Your Current Rating: {{rating}}
+        <li>Release Date: {{movie.released_at}}
+        <li>IMDB URL: {{movie.imdb_url}}
+    </ul>
+
+    <form action = "/update_rating" method="POST">
+        <h2>Update Rating</h2>
+        <input type="text" placeholder= "Rating" name="rating">
+        <input type= "hidden" name="movie_id" value="{{movie.id}}">
+        <input type="submit" value="Update">
+    </form>
+
+</body>
+</html>

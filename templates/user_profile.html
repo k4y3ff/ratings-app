@@ -4,6 +4,9 @@
 </head>
 <body>
 </body>
+
+	<a href="/logout">Logout</a>
+	
 	<h1>User Profile</h1>
 	
 	<h2>User Info</h2>
@@ -17,7 +20,7 @@
 	<h2>Ratings</h2>
 
 	{% for rating in user.ratings %}
-		<h3>{{rating.movie.name}}</h3>
+		<h3><a href="/movie?movie_id={{rating.movie.id}}">{{rating.movie.name}}</a></h3>
 		<ul>
 			<li>Rating: {{rating.rating}}</li>
 			<li>Release Date: {{rating.movie.released_at}} </li>
