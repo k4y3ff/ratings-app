@@ -89,7 +89,7 @@ def movie():
 
     print user_rating
 
-    if user_rating != None and user_rating != "Must Log Into Account to See Ratings": ##TODO: fix
+    if user_rating != None and 'user_id' in session :
         return render_template("movie.html", movie = movie, average = avg_rating, 
                                 user_rating = effective_rating, beratement = beratement)
     elif user_rating == None:

@@ -1,9 +1,20 @@
 <html>
 <head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
     <title>Login</title>
 </head>
 <body>
 </body>
+    
+    <ul class="nav">
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/new_user">Register</a></li>
+        <li><a href="/user_list">View All Users</a></li>
+        <li><a href="/movie_list">View All Movies</a></li>
+    </ul>
+
     <h1>Login</h1>
     
     <h2>{{error}}</h2>

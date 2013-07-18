@@ -1,9 +1,11 @@
 <html>
 <head>
-	<title>Index</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <title>Index</title>
 </head>
 <body>
-	<ul>
+	<ul class="nav">
 		<li><a href="/login">Login</a></li>
         <li><a href="/logout">Logout</a></li>
 		<li><a href="/new_user">Register</a></li>
