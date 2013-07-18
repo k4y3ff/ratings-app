@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Acme' rel='stylesheet' type='text/css'>
 
     <title>User List</title>
 </head>
@@ -15,8 +16,13 @@
         <li><a href="/movie_list">View All Movies</a></li>
     </ul>
 
-{% for user in users %}
-	<h2><a href="/user_profile?id={{user.id}}">User {{user.id}}</a>, age {{user.age}} has {{user.ratings|length}} ratings</h2>
-{% endfor %}
+    <h1>User List</h1>
+
+    <ul>
+    {% for user in users %}
+        <li><a href="/user_profile?id={{user.id}}">User {{user.id}}</a></li>
+    {% endfor %}
+    </ul>
+
 </body>
 </html>

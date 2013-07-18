@@ -1,6 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href='http://fonts.googleapis.com/css?family=Acme' rel='stylesheet' type='text/css'>
 
 	<title>User Profile: {{user.id}}</title>
 </head>
@@ -24,7 +25,7 @@
 		<li>Zipcode: {{user.zipcode}}</li>
 	</ul>
 
-	<h2>Ratings</h2>
+	<h2>Ratings ({{user.ratings|length}})</h2>
 
 	{% for rating in user.ratings %}
 		<h3><a href="/movie?movie_id={{rating.movie.id}}">{{rating.movie.name}}</a></h3>
