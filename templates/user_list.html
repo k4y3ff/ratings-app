@@ -1,5 +1,18 @@
 <html>
+<head>
+    <title>User List</title>
+</head>
+
 <body>
+
+    <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/new_user">Register</a></li>
+        <li><a href="/user_list">View All Users</a></li>
+        <li><a href="/movie_list">View All Movies</a></li>
+    </ul>
+
 {% for user in users %}
 	<h2><a href="/user_profile?id={{user.id}}">User {{user.id}}</a>, age {{user.age}} has {{user.ratings|length}} ratings</h2>
 {% endfor %}

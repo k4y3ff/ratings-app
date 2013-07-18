@@ -37,21 +37,72 @@ def movie():
     movie_id = request.args.get("movie_id")
     movie = model.session.query(model.Movie).get(movie_id)
 
+    ratings = movie.ratings
+    rating_nums = []
+    user_rating = None
+
     if 'user_id' in session:
         user_id = session['user_id']
-        rating = model.session.query(model.Rating).filter_by(user_id = user_id, movie_id = movie_id).first()
-    else:
-        rating = "Must Log Into Account to See Ratings"
 
-    if rating != None and rating != "Must Log Into Account to See Ratings":
-        return render_template("movie.html", movie = movie, rating = rating.rating)
+        for r in ratings:
+            if r.user_id == session['user_id']:
+                user_rating = r.rating
+            rating_nums.append(r.rating)
+
+        avg_rating = float(sum(rating_nums))/len(rating_nums)
+        avg_rating = round (avg_rating, 2)
+
+        user = model.session.query(model.User).get(session['user_id'])
+        prediction = None
+        
+        if not user_rating:
+            prediction = user.predict_rating(movie)
+            effective_rating = round(prediction, 2)
+        else: 
+            effective_rating = round(user_rating, 2)
+
+        the_eye = model.session.query(model.User).filter_by(email = "theeye@ofjudgement.com").one()
+        eye_rating = model.session.query(model.Rating).filter_by(user_id = the_eye.id, movie_id = movie.id).first()
+
+        if not eye_rating:
+            eye_rating = the_eye.predict_rating(movie)
+        else:
+            eye_rating = eye_rating.rating
+
+        difference = abs(eye_rating - effective_rating)
+
+        messages = ["I suppose you don't have such bad taste after all.", 
+                    "I regret every decision that I've ever made that has brought me to listen to your opinion.",
+                    "Words fail me, as your taste in movies has clearly failed you.",
+                    "That movie is great. For a clown to watch. Idiot."]
+
+        beratement = messages[int(difference)]
+
     else:
-        return render_template("movie.html", movie = movie, rating = "Not Rated")
+        user_rating = "Must Log Into Account to See Ratings"
+
+        for r in ratings:
+            rating_nums.append(r.rating)
+
+        avg_rating = float(sum(rating_nums))/len(rating_nums)
+        avg_rating = round (avg_rating, 2)
+
+    print user_rating
+
+    if user_rating != None and user_rating != "Must Log Into Account to See Ratings": ##TODO: fix
+        return render_template("movie.html", movie = movie, average = avg_rating, 
+                                user_rating = effective_rating, beratement = beratement)
+    elif user_rating == None:
+        return render_template("movie.html", movie = movie, average = avg_rating,
+                                user_rating = user_rating, prediction = effective_rating)
+    else:
+        return render_template("movie.html", movie = movie, average = avg_rating, 
+                                user_rating = user_rating)
 
 @app.route("/movie_list")
 def movie_list():
 
-    movie_list = model.session.query(model.Movie).limit(20).all()
+    movie_list = model.session.query(model.Movie).limit(20).all() #TODO: Pagination (so we can see more than 20 movies)
 
     return render_template("movie_list.html", movie_list= movie_list)
 
@@ -96,7 +147,6 @@ def update_rating():
         
         if current_rating != None:
             current_rating.rating = rating
-            model.session.update(current_rating.rating)
             model.session.commit()
         else:
             model.session.add(model.Rating(movie_id = movie_id, user_id = user_id, rating = rating))
@@ -111,7 +161,7 @@ def update_rating():
 @app.route("/user_list")
 def user_list():
     
-    user_list = model.session.query(model.User).limit(5).all()
+    user_list = model.session.query(model.User).limit(5).all() #TODO: Pagination
     
     return render_template("user_list.html", users = user_list)
 

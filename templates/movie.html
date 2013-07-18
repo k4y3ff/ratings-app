@@ -1,11 +1,31 @@
 <html>
 <head>
-    <title></title>
+    <title>{{movie.name}}</title>
 </head>
 <body>
-    <h1>{{movie.name}}</h1>
+
     <ul>
-        <li>Your Current Rating: {{rating}}</li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/new_user">Register</a></li>
+        <li><a href="/user_list">View All Users</a></li>
+        <li><a href="/movie_list">View All Movies</a></li>
+    </ul>
+
+    <h1>{{movie.name}}</h1>
+
+    {% if beratement %}
+    <h2>{{beratement}}</h2>
+    {% endif %}
+
+    {% if prediction %}
+    <h3>We predict you will rate this movie {{prediction}}.</h3>
+    {% endif %}
+    
+
+    <ul>
+        <li>Your Rating: {{user_rating}}</li>
+        <li>Average Rating: {{average}}</li>
         <li>Release Date: {{movie.released_at}}</li>
         <li>IMDB URL: {{movie.imdb_url}}</li>
     </ul>

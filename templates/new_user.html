@@ -1,9 +1,17 @@
 <html>
 <head>
-	<title></title>
+	<title>New User</title>
 </head>
 <body>
-</body>
+
+    <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/new_user">Register</a></li>
+        <li><a href="/user_list">View All Users</a></li>
+        <li><a href="/movie_list">View All Movies</a></li>
+    </ul>
+
 	<h2>{{error}}</h2>
 	<form action="/new_user" method="POST">
 		<input type="text" placeholder="Email" name="email" required="required">
