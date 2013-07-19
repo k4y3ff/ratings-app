@@ -161,7 +161,7 @@ def update_rating():
 @app.route("/user_list")
 def user_list():
     
-    user_list = model.session.query(model.User).limit(5).all() #TODO: Pagination
+    user_list = model.session.query(model.User).limit(20).all() #TODO: Pagination
     
     return render_template("user_list.html", users = user_list)
 
